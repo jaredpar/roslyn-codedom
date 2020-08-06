@@ -43,7 +43,7 @@ function Add-TargetFramework($name, $packagePath)
     $allPropNames += $propName
     $fieldName = "_" + $propName
     $script:codeContent += @"
-        private static byte[] $fieldName;
+        private static byte[]? $fieldName;
         internal static byte[] $propName => ResourceLoader.GetOrCreateResource(ref $fieldName, "$logicalName");
 
 "@

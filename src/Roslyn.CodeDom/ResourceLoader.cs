@@ -38,7 +38,7 @@ namespace Roslyn.CodeDom
             }
         }
 
-        public static byte[] GetOrCreateResource(ref byte[] resource, string name)
+        public static byte[] GetOrCreateResource(ref byte[]? resource, string name)
         {
             if (resource == null)
             {
