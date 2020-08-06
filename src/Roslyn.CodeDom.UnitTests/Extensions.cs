@@ -1,6 +1,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 using System;
 using System.IO;
 using System.Runtime.Versioning;
@@ -10,12 +11,12 @@ namespace Roslyn.CodeDom.UnitTests
 {
     internal static class Extensions
     {
-        internal static MemoryStream Emit(this Compilation compilation)
+        internal static (EmitResult EmitResults, MemoryStream PeStream) Emit(this Compilation compilation)
         {
             var memoryStream = new MemoryStream();
-            compilation.Emit(memoryStream);
+            var results = compilation.Emit(memoryStream);
             memoryStream.Position = 0;
-            return memoryStream;
+            return (results, memoryStream);
         }
     }
 }
