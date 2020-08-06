@@ -25,19 +25,20 @@ function Add-TargetFramework($name, $packagePath)
   foreach ($dllPath in $list)
   {
     $dllName= Split-Path -Leaf $dllPath
-    $dllName = $dllName.Substring(0, $dllName.Length - 4)
-    $logicalName = "$($name).$($dllName)";
+    $dll = $dllName.Substring(0, $dllName.Length - 4)
+    $logicalName = "$($name).$($dll)";
     $dllPath = $dllPath.Substring($nugetPackageRoot.Length)
     $dllPath = '$(NuGetPackageRoot)' + $dllPath
 
     $script:targetsContent += @"
         <EmbeddedResource Include="$dllPath">
           <LogicalName>$logicalName</LogicalName>
+          <Link>Resources\$name\$dllName</Link>
         </EmbeddedResource>
 
 "@
 
-    $propName = $dllName.Replace(".", "");
+    $propName = $dll.Replace(".", "");
     $fieldName = "_" + $propName
     $script:codeContent += @"
             private static byte[] $fieldName;
@@ -46,7 +47,7 @@ function Add-TargetFramework($name, $packagePath)
 "@
 
     $refContent += @"
-            public static PortableExecutableReference $propName { get; } = AssemblyMetadata.CreateFromImage($($resourceTypeName).$($propName)).GetReference(display: "$dllName ($name)");
+            public static PortableExecutableReference $propName { get; } = AssemblyMetadata.CreateFromImage($($resourceTypeName).$($propName)).GetReference(display: "$dll ($name)");
 
 "@
 
