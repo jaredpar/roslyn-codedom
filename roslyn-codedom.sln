@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeDom", "src\RoslynCodeDom\RoslynCodeDom.csproj", "{18513BB8-1E89-4DE8-8130-E96B408C7287}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.CodeDom", "src\Roslyn.CodeDom\Roslyn.CodeDom.csproj", "{18513BB8-1E89-4DE8-8130-E96B408C7287}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,6 @@ function Add-TargetFramework($name, $packagePath)
   }
 
   $realPackagePath = Join-Path $nugetPackageRoot $packagePath 
-  $list = Get-ChildItem -filter *.dll $realPackagePath | %{ $_.FullName }
   $resourceTypeName = "Resources" + $name
   $script:codeContent += @"
         public static class $resourceTypeName
@@ -21,27 +20,18 @@ function Add-TargetFramework($name, $packagePath)
 
 "@
 
-  $nugetPackagePath = '$(NugetPackageRoot)\' + $packagePath
   $name = $name.ToLower()
+  $list = Get-ChildItem -filter *.dll $realPackagePath | %{ $_.FullName }
   foreach ($dllPath in $list)
   {
-    if ($dllPath.Contains('#'))
-    {
-      $all = $dllPath.Split('#')
-      $dllName = $all[0]
-      $dllPath = $all[1]
-      $dll = Split-Path -leaf $dllPath
-      $logicalName = "$($dllName.ToLower()).$($name).$($dll)";
-    }
-    else
-    {
-      $dll = Split-Path -leaf $dllPath
-      $dllName = $dll.Substring(0, $dll.Length - 4)
-      $logicalName = "$($name).$($dll)";
-    }
+    $dllName= Split-Path -Leaf $dllPath
+    $dllName = $dllName.Substring(0, $dllName.Length - 4)
+    $logicalName = "$($name).$($dllName)";
+    $dllPath = $dllPath.Substring($nugetPackageRoot.Length)
+    $dllPath = '$(NuGetPackageRoot)' + $dllPath
 
     $script:targetsContent += @"
-        <EmbeddedResource Include="$nugetPackagePath\$dllPath">
+        <EmbeddedResource Include="$dllPath">
           <LogicalName>$logicalName</LogicalName>
         </EmbeddedResource>
 
@@ -56,7 +46,7 @@ function Add-TargetFramework($name, $packagePath)
 "@
 
     $refContent += @"
-            public static PortableExecutableReference $propName { get; } = AssemblyMetadata.CreateFromImage($($resourceTypeName).$($propName)).GetReference(display: "$dll ($name)");
+            public static PortableExecutableReference $propName { get; } = AssemblyMetadata.CreateFromImage($($resourceTypeName).$($propName)).GetReference(display: "$dllName ($name)");
 
 "@
 

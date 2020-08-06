@@ -8,4 +8,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis" Version="3.7.0" />
     <PackageReference Include="Microsoft.NETCore.App.Ref" Version="3.1.0" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
+
+  <Import Project="Generated.targets" />
 </Project>
