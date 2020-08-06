@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.CodeDom", "src\Roslyn.CodeDom\Roslyn.CodeDom.csproj", "{18513BB8-1E89-4DE8-8130-E96B408C7287}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roslyn.CodeDom", "src\Roslyn.CodeDom\Roslyn.CodeDom.csproj", "{18513BB8-1E89-4DE8-8130-E96B408C7287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.CodeDom.UnitTests", "Roslyn.CodeDom.UnitTests\Roslyn.CodeDom.UnitTests.csproj", "{E22B3D46-0E6C-46B8-95CB-F273AA93C3D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{18513BB8-1E89-4DE8-8130-E96B408C7287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18513BB8-1E89-4DE8-8130-E96B408C7287}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18513BB8-1E89-4DE8-8130-E96B408C7287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E22B3D46-0E6C-46B8-95CB-F273AA93C3D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E22B3D46-0E6C-46B8-95CB-F273AA93C3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E22B3D46-0E6C-46B8-95CB-F273AA93C3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E22B3D46-0E6C-46B8-95CB-F273AA93C3D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

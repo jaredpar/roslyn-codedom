@@ -7,21 +7,22 @@ function Add-TargetFramework($name, $packagePath)
   }
 
   $realPackagePath = Join-Path $nugetPackageRoot $packagePath 
-  $resourceTypeName = "Resources" + $name
+  $resourceTypeName = $name + "Resources"
   $script:codeContent += @"
-        public static class $resourceTypeName
-        {
+    internal static class $resourceTypeName
+    {
 
 "@;
 
   $refContent = @"
-        public static class $name
-        {
+    public static class $name
+    {
 
 "@
 
   $name = $name.ToLower()
   $list = Get-ChildItem -filter *.dll $realPackagePath | %{ $_.FullName }
+  $allPropNames = @()
   foreach ($dllPath in $list)
   {
     $dllName= Split-Path -Leaf $dllPath
@@ -39,30 +40,45 @@ function Add-TargetFramework($name, $packagePath)
 "@
 
     $propName = $dll.Replace(".", "");
+    $allPropNames += $propName
     $fieldName = "_" + $propName
     $script:codeContent += @"
-            private static byte[] $fieldName;
-            public static byte[] $propName => ResourceLoader.GetOrCreateResource(ref $fieldName, "$logicalName");
+        private static byte[] $fieldName;
+        internal static byte[] $propName => ResourceLoader.GetOrCreateResource(ref $fieldName, "$logicalName");
 
 "@
 
     $refContent += @"
-            public static PortableExecutableReference $propName { get; } = AssemblyMetadata.CreateFromImage($($resourceTypeName).$($propName)).GetReference(display: "$dll ($name)");
+        public static PortableExecutableReference $propName { get; } = AssemblyMetadata.CreateFromImage($($resourceTypeName).$($propName)).GetReference(display: "$dll ($name)");
 
 "@
 
   }
 
-  $script:codeContent += @"
-        }
+  $refContent += @"
+        public static IEnumerable<PortableExecutableReference> All { get; }= new PortableExecutableReference[]
+        {
+
+"@;
+    foreach ($propName in $allPropNames)
+    {
+      $refContent += @"
+            $propName,
+
+"@
+    }
+
+    $refContent += @"
+        };
+    }
 
 "@
 
-    $script:codeContent += $refContent;
     $script:codeContent += @"
-        }
+    }
 
 "@
+    $script:codeContent += $refContent;
 }
 
 $targetsContent = @"
@@ -72,18 +88,13 @@ $targetsContent = @"
 "@;
 
 $codeContent = @"
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 // This is a generated file, please edit Generate.ps1 to change the contents
 
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
-namespace Roslyn.CodeDom
+namespace Roslyn.CodeDom.References
 {
-    public static class TestMetadata
-    {
 
 "@
 
@@ -97,7 +108,6 @@ $targetsContent += @"
 "@;
 
 $codeContent += @"
-    }
 }
 "@
 
