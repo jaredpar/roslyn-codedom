@@ -1,29 +1,23 @@
-using Microsoft.CodeAnalysis;
-using Roslyn.CodeDom.References;
+﻿using Basic.Reference.Assemblies;
+using Microsoft.CodeAnalysis.CSharp;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Roslyn.CodeDom
 {
     public static class Extensions
     {
-        public static Compilation WithFrameworkReferences(this Compilation compilation, TargetFramework targetFramework)
-        {
-            IEnumerable<MetadataReference>? references;
-            switch (targetFramework)
-            {
-                case TargetFramework.NetCoreApp31:
-                    references = NetCoreApp31.All;
-                    break;
-                case TargetFramework.NetStandard20:
-                    references = NetStandard20.All;
-                    break;
-                default:
-                    throw new InvalidOperationException($"Invalid value: {targetFramework}");
-            }
+        public static CSharpCompilation WithFrameworkReferences(this CSharpCompilation compilation, TargetFramework targetFramework) =>
+            compilation.WithReferenceAssemblies(targetFramework.ToReferenceAssemblyKind());
 
-            return compilation.WithReferences(references);
-        }
+        public static ReferenceAssemblyKind ToReferenceAssemblyKind(this TargetFramework targetFramework) => targetFramework switch
+        {
+            TargetFramework.NetStandard20 => ReferenceAssemblyKind.NetStandard20,
+            TargetFramework.NetCoreApp31 => ReferenceAssemblyKind.NetCoreApp31,
+            TargetFramework.Net50 => ReferenceAssemblyKind.Net50,
+            _ => throw new Exception($"Invalid target framework {targetFramework}")
+        };
+
     }
 }

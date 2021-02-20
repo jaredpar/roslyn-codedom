@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.7.0" />
-    <PackageReference Include="Microsoft.NETCore.App.Ref" Version="3.1.0" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="Basic.Reference.Assemblies" Version="1.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.8.0" />
     <PackageReference Include="System.CodeDom" Version="4.7.0" />
   </ItemGroup>
 
-  <Import Project="Generated.targets" />
 </Project>

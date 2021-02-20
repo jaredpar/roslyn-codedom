@@ -5,6 +5,7 @@ namespace Roslyn.CodeDom
     public enum TargetFramework
     {
         NetStandard20,
-        NetCoreApp31
+        NetCoreApp31,
+        Net50
     }
 }

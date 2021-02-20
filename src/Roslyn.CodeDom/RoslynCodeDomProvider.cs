@@ -15,7 +15,7 @@ namespace Roslyn.CodeDom
             TargetFramework = targetFramework;
         }
 
-        [Obsolete("Callers should not use the ICokdeCompiler interface and should instead use the methods directly on the CodeDomProvider class.")]
+        [Obsolete("Callers should not use the ICodeCompiler interface and should instead use the methods directly on the CodeDomProvider class.")]
         public override ICodeCompiler CreateCompiler() => new RoslynCodeCompiler(TargetFramework);
 
         [Obsolete]
