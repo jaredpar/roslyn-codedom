@@ -1,4 +1,4 @@
-# Simplify in memory compilation for .NET Core
+# CodeDom implemenation on top of Roslyn
 
 [Roslyn](https://github.com/dotnet/roslyn) and the [CodeDom](https://docs.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/using-the-codedom), 
 are two powerful APIs for compiling code inside your .NET application. Provide them code,
